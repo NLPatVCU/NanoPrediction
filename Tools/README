@@ -1,0 +1,33 @@
+To run the predictive analysys program, open command line and type "perl multipleRegressionPrediction.pl --independent [Independent variables] --dependent [Dependent variable] --showEquations"
+Ex: "perl multipleRegressionPrediction.pl --independent Reaction_Duration_hr,Precursor_to_Reducing_Agent_Ratio --dependent Mean_Particle_Diameter_nm_TEM --showEquations"
+
+The program will then ask what method was used for the reactions it will be predicting. 
+
+After you enter the method, it will tell you how many data points it has available and the equations it has generated.
+It will generate 5 equations: Logarithmic, Exponential, Linear, Quadratic, and Combined. In all of these equations, y represents the dependent variable and the xs represent the
+independent variables (x0 being the first entered, x1 being the second, and so on). The combined equation is slightly different. It combines pieces of other equations (Logarithmic,
+Exponential, Linear, and Quadratic) to form an equation that is possibly more accurate than each other equation individually. Note that the combined equation may be far less accurate
+than other equations because it looks at 1 independent variable at a time and pieces them together rather than look at all independent variables at once as the other equations do. 
+Ex: 
+What method is the reaction? Wet-chemical
+12 valid points available.
+Logarithmic:  	y = -34.7881660458695 * ln(x0) + 557.289989513552 * ln(x1) + 881.926678866373                  r^2 = 0.225409596511868
+Exponential:  	y = e^( -0.0107062718019615 * x0 + 3.31115148227499 * x1 + 2.19891176081159)                   r^2 = 0.358954108765515
+Linear:       	y = -36.8051578452568 * x0 + 1354.40807496625 * x1 + -138.140602021862                         r^2 = 0.285895711385223
+Quadratic:    	y = ( -0.558964041035767 * x0 + 26.4778493130071 * x1 + 0.655891072568069)                     r^2 = 0.309612702634858
+Combined equation r^2 = -0.113915195473325
+y = 17.6138152521559 * x0 + -24.4443270792598 + e^(0.867632312258971 * x1 + 0.574067782172664)
+
+The program will then ask you for values for each independent variable you told it you use. From those values, it will estimate the dependent variable with each type of equation.
+Ex:
+Enter Reaction Duration hr or type stop to stop: 3.5
+Enter Precursor to Reducing Agent Ratio or type stop to stop: 0.5
+Using a Exponential regression (correlation coefficient 0.358954108765515), estimated Mean Particle Diameter nm TEM = 45.4683077656476
+Using a Quadratic regression (correlation coefficient 0.309612702634858), estimated Mean Particle Diameter nm TEM = 3.45520499904802
+Using a Linear regression (correlation coefficient 0.285895711385223), estimated Mean Particle Diameter nm TEM = 410.245383002862
+Using a Logarithmic regression (correlation coefficient 0.225409596511868), estimated Mean Particle Diameter nm TEM = 452.06136771664
+Using the combined equation, estimated Mean Particle Diameter nm TEM = 39.9438235998361
+
+What this means is that based on the data provided, if a reaction were to last 3.5 hours and have a Precursor to Reducing Agent Ratio of 0.5, then the resulting mean particle diameter
+will most likely be around 45.468. While the other regressions predict other values, the exponential regression has the highest r^2, so it is most likely the closest.
+
